@@ -31,6 +31,11 @@ class Sort {
   double insertion_sort(bool revs = false);
   double shell_sort(bool revs = false);
   double merge_sort(bool revs = false);
+  double quick_sort(bool revs = false);
+  double heap_sort(bool revs = false);
+  double counting_sort(bool revs = false);
+  double bucket_sort(bool revs = false);
+  double radix_sort(bool revs = false);
 
   void reorder_src(int flag = 0) {
     if (flag == 0) {

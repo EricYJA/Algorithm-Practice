@@ -219,3 +219,73 @@ void Sort::merge(int *A,int *L,int leftCount,int *R,int rightCount) {
 	while(i < leftCount) A[k++] = L[i++];
 	while(j < rightCount) A[k++] = R[j++];
 }
+
+double Sort::quick_sort(bool revs) {
+  auto start = std::chrono::system_clock::now();
+
+  this->is_reverse = revs;
+  merge_helper(src_arr, size);
+
+  auto end = std::chrono::system_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+  return double(duration.count()) 
+            * std::chrono::microseconds::period::num 
+            / std::chrono::microseconds::period::den;
+}
+
+double Sort::heap_sort(bool revs) {
+  auto start = std::chrono::system_clock::now();
+
+  this->is_reverse = revs;
+  merge_helper(src_arr, size);
+
+  auto end = std::chrono::system_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+  return double(duration.count()) 
+            * std::chrono::microseconds::period::num 
+            / std::chrono::microseconds::period::den;
+}
+
+double Sort::counting_sort(bool revs) {
+  auto start = std::chrono::system_clock::now();
+
+  this->is_reverse = revs;
+  merge_helper(src_arr, size);
+
+  auto end = std::chrono::system_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+  return double(duration.count()) 
+            * std::chrono::microseconds::period::num 
+            / std::chrono::microseconds::period::den;
+}
+
+double Sort::bucket_sort(bool revs) {
+  auto start = std::chrono::system_clock::now();
+
+  this->is_reverse = revs;
+  merge_helper(src_arr, size);
+
+  auto end = std::chrono::system_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+  return double(duration.count()) 
+            * std::chrono::microseconds::period::num 
+            / std::chrono::microseconds::period::den;
+}
+
+double Sort::radix_sort(bool revs) {
+  auto start = std::chrono::system_clock::now();
+
+  this->is_reverse = revs;
+  merge_helper(src_arr, size);
+
+  auto end = std::chrono::system_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+  return double(duration.count()) 
+            * std::chrono::microseconds::period::num 
+            / std::chrono::microseconds::period::den;
+}
