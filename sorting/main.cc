@@ -6,8 +6,20 @@
 
 
 int main() {
-  Sort sort = Sort(10000);
-  printf("%f\n", sort.insertion_sort());
+  Sort sort = Sort(500000, 0, 1000000);
+  // printf("bubble sort time: %f Size: %d \n", sort.bubble_sort(), sort.get_size());
+  // sort.check();
+  // sort.reorder_src();
+  // printf("selection sort time: %f Size: %d \n", sort.selection_sort(), sort.get_size());
+  // sort.check();
+  // sort.reorder_src();
+  // printf("insertion sort time: %f Size: %d \n", sort.insertion_sort(), sort.get_size());
+  // sort.check();
+  // sort.reorder_src();
+  printf("shell sort time: %f Size: %d \n", sort.shell_sort(), sort.get_size());
   sort.check();
-  return 0; 
+  sort.reorder_src();
+  printf("merge sort time: %f Size: %d \n", sort.merge_sort(), sort.get_size());
+  sort.check();
+  return 0;
 }
