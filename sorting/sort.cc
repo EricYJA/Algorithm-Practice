@@ -126,8 +126,9 @@ double Sort::shell_sort(bool revs) {
   if (!is_reverse) {
     int gap, i, j;
     int temp;
-    while (gap < size / 5)
+    while (gap < size / 5) {
       gap = gap * 3 + 1; 
+    }
     for (; gap > 0; gap /= 3) {
       for (i = gap; i < size; i++) {
         temp = src_arr[i];
@@ -137,7 +138,19 @@ double Sort::shell_sort(bool revs) {
       }
     }
   } else {
-
+    int gap, i, j;
+    int temp;
+    while (gap < size / 5) {
+      gap = gap * 3 + 1;
+    }
+    for (; gap > 0; gap /= 3) {
+      for (i = gap; i < size; i++) {
+        temp = src_arr[i];
+        for (j = i - gap; j >= 0 && src_arr[j] < temp; j -= gap)
+          src_arr[j + gap] = src_arr[j];
+        src_arr[j + gap] = temp;
+      }
+    }
   }
 
   auto end = std::chrono::system_clock::now();
@@ -152,11 +165,7 @@ double Sort::merge_sort(bool revs) {
   auto start = std::chrono::system_clock::now();
 
   this->is_reverse = revs;
-  if (!is_reverse) {
-    merge_helper(src_arr, size);
-  } else {
-
-  }
+  merge_helper(src_arr, size);
 
   auto end = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
@@ -196,12 +205,17 @@ void Sort::merge(int *A,int *L,int leftCount,int *R,int rightCount) {
 	// j - to mark the index of right sub-raay (R)
 	// k - to mark the index of merged subarray (A)
 	i = 0; j = 0; k =0;
- 
-	while(i<leftCount && j< rightCount) {
-		if(L[i] < R[j]) A[k++] = L[i++];
-		else A[k++] = R[j++];
+
+	while(i < leftCount && j < rightCount) {
+    if (!is_reverse) {
+      if(L[i] < R[j]) A[k++] = L[i++];
+		  else A[k++] = R[j++];
+    } else {
+      if(L[i] > R[j]) A[k++] = L[i++];
+		  else A[k++] = R[j++];
+    }
 	}
+
 	while(i < leftCount) A[k++] = L[i++];
 	while(j < rightCount) A[k++] = R[j++];
-
 }
