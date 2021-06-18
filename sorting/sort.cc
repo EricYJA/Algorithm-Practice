@@ -1,4 +1,5 @@
 #include "sort.hh"
+
 Sort::Sort(int _size, int _low_lim, int _upp_lim): 
             size(_size), low_lim(_low_lim), upp_lim(_upp_lim) {
   if (size <= 0) {
@@ -17,7 +18,6 @@ Sort::Sort(int _size, int _low_lim, int _upp_lim):
   }
   sort(tgt_arr, tgt_arr + size);
 }
-
 
 double Sort::bubble_sort(bool revs) {
   auto start = std::chrono::system_clock::now();
@@ -224,7 +224,7 @@ double Sort::quick_sort(bool revs) {
   auto start = std::chrono::system_clock::now();
 
   this->is_reverse = revs;
-  merge_helper(src_arr, size);
+  quick_helper(0, size - 1);
 
   auto end = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
@@ -232,13 +232,42 @@ double Sort::quick_sort(bool revs) {
   return double(duration.count()) 
             * std::chrono::microseconds::period::num 
             / std::chrono::microseconds::period::den;
+}
+
+void Sort::quick_helper(int left, int right) {
+  if (left < right) {
+    int index = partition(left, right);
+    quick_helper(left, index);
+    quick_helper(index + 1, right);
+  }
+}
+
+int Sort::partition(int left, int right) {
+  int pivot_idx = left;
+  for (int i = left + 1; i <= right; i++) {
+    if (!is_reverse && src_arr[i] < src_arr[left]) {
+      pivot_idx++;
+      swap(i, pivot_idx);
+    } else if (is_reverse && src_arr[i] > src_arr[left]) {
+      pivot_idx++;
+      swap(i, pivot_idx);
+    }
+  }
+  swap(pivot_idx, left);
+  return pivot_idx;
 }
 
 double Sort::heap_sort(bool revs) {
   auto start = std::chrono::system_clock::now();
 
   this->is_reverse = revs;
-  merge_helper(src_arr, size);
+  
+  build_heap();
+	for (int i = size - 1; i >= 1; --i) {
+		swap(0, i);
+		--heap_size;
+		is_reverse ? min_heapify(0) : max_heapify(0);
+	}
 
   auto end = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
@@ -248,11 +277,46 @@ double Sort::heap_sort(bool revs) {
             / std::chrono::microseconds::period::den;
 }
 
+void Sort::build_heap() {
+  heap_size = size;
+	for (int i = size/2 - 1; i >= 0; i--) {
+    is_reverse ? min_heapify(i) : max_heapify(i);
+  }
+}
+
+void Sort::max_heapify(int i) { 
+	int l = ((i << 1) + 1), r = ((i << 1) + 2);
+	int largest = i;
+	if (l < heap_size && src_arr[l] > src_arr[largest])
+		largest = l;
+	if (r < heap_size && src_arr[r] > src_arr[largest])
+		largest = r;
+
+	if (largest != i) {
+		swap(i, largest);
+		max_heapify(largest);
+	}
+}
+
+void Sort::min_heapify(int i) { 
+	int l = ((i << 1) + 1), r = ((i << 1) + 2);
+	int smallest = i;
+	if (l < heap_size && src_arr[l] < src_arr[smallest])
+		smallest = l;
+	if (r < heap_size && src_arr[r] < src_arr[smallest])
+		smallest = r;
+
+	if (smallest != i) {
+		swap(i, smallest);
+		min_heapify(smallest);
+	}
+}
+
 double Sort::counting_sort(bool revs) {
   auto start = std::chrono::system_clock::now();
 
   this->is_reverse = revs;
-  merge_helper(src_arr, size);
+  
 
   auto end = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
@@ -266,7 +330,7 @@ double Sort::bucket_sort(bool revs) {
   auto start = std::chrono::system_clock::now();
 
   this->is_reverse = revs;
-  merge_helper(src_arr, size);
+  
 
   auto end = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
@@ -280,7 +344,7 @@ double Sort::radix_sort(bool revs) {
   auto start = std::chrono::system_clock::now();
 
   this->is_reverse = revs;
-  merge_helper(src_arr, size);
+  
 
   auto end = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);

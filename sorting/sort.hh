@@ -20,8 +20,19 @@ class Sort {
 
   void swap(int i, int j);
 
+  /* merge sort helper function */
   void merge_helper(int *A,int n);
   void merge(int *A,int *L,int leftCount,int *R,int rightCount);
+
+  /* quick sort helper function */
+  void quick_helper(int left, int right);
+  int partition(int left, int right);
+
+  /* heap sort helper function */
+  int heap_size;
+  void build_heap();
+  void max_heapify(int i);
+  void min_heapify(int i);
 
  public:
   Sort(int size = 500000, int low_lim = 0, int upp_lim = 1000000); 
