@@ -6,7 +6,7 @@
 
 
 int main() {
-  Sort sort = Sort(20, 0, 20);
+  Sort sort = Sort(40, 0, 20);
   // printf("bubble sort time: %f Size: %d \n", sort.bubble_sort(), sort.get_size());
   // sort.check();
   // sort.reorder_src();
@@ -33,11 +33,11 @@ int main() {
   sort.reorder_src();
   printf("bucket sort time: %f Size: %d \n", sort.bucket_sort(), sort.get_size());
   sort.check();
-  sort.print_string();
+  // sort.print_string();
   sort.reorder_src();
   printf("radix sort time: %f Size: %d \n", sort.radix_sort(), sort.get_size());
   sort.check();
-  sort.print_string();
+  // sort.print_string();
 
   return 0;
 }
