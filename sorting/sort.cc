@@ -317,7 +317,27 @@ double Sort::counting_sort(bool revs) {
 
   this->is_reverse = revs;
   
+  int count_size = upp_lim - low_lim + 1;
+  int* count_arr = new int[count_size];
+  for (int i = 0; i < count_size; i++) {
+    count_arr[i] = 0;
+  }
 
+  for (int i = 0; i < size; i++) {
+    count_arr[src_arr[i] - low_lim]++;
+  }
+
+  int src_counter = 0;
+  for (int i = 0; i < count_size; i++) {
+    if (count_arr[i] > 0) {
+      for (int j = 0; j < count_arr[i]; j++) {
+        int index = is_reverse? size - src_counter - 1 : src_counter;
+        src_arr[index] = i;
+        src_counter++;
+      }
+    }
+  }
+  
   auto end = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
@@ -326,11 +346,24 @@ double Sort::counting_sort(bool revs) {
             / std::chrono::microseconds::period::den;
 }
 
+/* The combination of merge sort and any sort(quick sort in my case) */
+/* Unfinished since C++ array does't support dynamic length adjust, unless
+ * use memcopy, which us a pain in the ass and easy to cause overflow. 
+ * Thus, I will just explain the steps here. 
+ * 
+ * This is an effective algorithm when facing large data and you can't sort
+ * them all at the same time. 
+ * 
+ * 1. Split n buckets covering rage [low_lim, max_lim]
+ * 2. Place nums in each bucket 
+ * 3. Sort within each bucket
+ * 4. Place the nums in bucket back 
+ */
 double Sort::bucket_sort(bool revs) {
+  this->is_reverse = revs;
   auto start = std::chrono::system_clock::now();
 
-  this->is_reverse = revs;
-  
+  /* TODO */
 
   auto end = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
@@ -340,11 +373,25 @@ double Sort::bucket_sort(bool revs) {
             / std::chrono::microseconds::period::den;
 }
 
+/* The combination of merge sort and any sort(quick sort in my case) */
+/* Unfinished since C++ array does't support dynamic length adjust, unless
+ * use memcopy, which us a pain in the ass and easy to cause overflow. 
+ * Thus, I will just explain the steps here. 
+ * 
+ * This is an effective algorithm when facing large data and you can't sort
+ * them all at the same time. 
+ * 
+ * 1. Split 10 buckets if using decimal
+ * 2. Place nums by its radix (starting from the lowest radix)
+ * 3. Sort within each bucket
+ * 4. Place the nums in bucket back
+ * 5. repeat from 2 until reaching the highest radix
+ */
 double Sort::radix_sort(bool revs) {
-  auto start = std::chrono::system_clock::now();
-
   this->is_reverse = revs;
+  auto start = std::chrono::system_clock::now();
   
+  /* TODO */
 
   auto end = std::chrono::system_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
